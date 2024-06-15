@@ -2,9 +2,10 @@
 
 import classNames from "classnames";
 import { FaCheck } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 import Spinner from "./Spinner";
 import { motion, AnimatePresence } from "framer-motion"
+import Undo from "./icons/Undo";
 
 type UploadProps = {
     successMessage: string;
@@ -12,9 +13,15 @@ type UploadProps = {
     uploadActionFn: () => void;
     filePath: string | null;
     id: string;
+    undoFn: () => void;
 }
 
-export default function Upload( {ctaMessage, successMessage, uploadActionFn, filePath = null, id} : UploadProps) {
+export default function Upload( {ctaMessage, successMessage, uploadActionFn, filePath = null, id, undoFn = () => {}} : UploadProps) {
+
+    useEffect(() => {
+        inProgress &&
+        setInProgress(false);
+    }, [filePath]);
 
     const handleClick = () => {
         if (inProgress) return;
@@ -35,8 +42,8 @@ export default function Upload( {ctaMessage, successMessage, uploadActionFn, fil
 
             <button
                 className={classNames(
-                    " inline-flex items-center min-h-[50px] text-white font-medium py-2 px-4 rounded border-2",
-                    filePath === null ? "bg-blue-500 border-blue-500 hover:bg-blue-600" : "border-transparent text-green-600 cursor-default"
+                    " inline-flex items-center min-h-[50px] text-white font-medium py-2 px-4 rounded",
+                    filePath === null ? "bg-blue-600 hover:bg-blue-500 transition-all" : "border-transparent text-green-600 cursor-default"
                 )}
                 onClick={handleClick}
             >
@@ -51,8 +58,13 @@ export default function Upload( {ctaMessage, successMessage, uploadActionFn, fil
 
             {
                 filePath &&
-                <div className=" text-slate-400 absolute bottom-0 right-0 m-4 text-xs">
-                    File Uploaded: <span className=" font-bold ">{fileName}</span>
+                <div className=" text-slate-400 absolute bottom-0 right-0 m-4 text-xs inline-flex items-center">
+                    <div>File Uploaded: <span className=" font-bold ">{fileName}</span></div>
+                    <div className="p-2 hover:text-red-600 border-slate-200 hover:border-red-300 cursor-pointer"
+                        onClick={undoFn}
+                    >
+                        <Undo />
+                    </div>
                 </div>
             }
         </div>
