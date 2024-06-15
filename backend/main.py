@@ -16,3 +16,7 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+@app.get("/test")
+def test():
+    return {"message": "Test route"}
