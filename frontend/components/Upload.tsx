@@ -26,12 +26,12 @@ export default function Upload( {ctaMessage, successMessage, uploadActionFn, fil
 
     const Cta = () => <span>{successMessage}</span>
 
-    
+    const fileName = filePath?.split('/')?.pop?.() || '';
 
     const UploadCta = () => <span className=" inline-flex gap-x-3 items-center">{inProgress && <Spinner />}<Cta /></span>
 
     return (
-        <div className=" grow h-64 border-2 border-gray-200 border-dashed rounded flex flex-row items-center justify-center">
+        <div className=" grow h-64 border-2 border-gray-200 border-dashed rounded flex flex-row items-center justify-center relative">
 
             <button
                 className={classNames(
@@ -49,6 +49,12 @@ export default function Upload( {ctaMessage, successMessage, uploadActionFn, fil
 
             </button>
 
+            {
+                filePath &&
+                <div className=" text-slate-400 absolute bottom-0 right-0 m-4 text-xs">
+                    File Uploaded: <span className=" font-bold ">{fileName}</span>
+                </div>
+            }
         </div>
     )
 }

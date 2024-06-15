@@ -23,7 +23,7 @@ export default function DashboardRoot() {
 
 	return (
 		<div className="w-full flex flex-col justify-center items-center h-screen">
-			<div className="w-full gap-3 columns-2 items-center">
+			<div className="w-full gap-3 md:columns-2 items-center">
 				{/* <MedicalRecordUpload /> */}
 				{/* <GuidelinesUpload /> */}
 
