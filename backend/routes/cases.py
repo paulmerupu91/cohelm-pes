@@ -1,15 +1,22 @@
 # cases.py
 from fastapi import APIRouter
+from utils import read_json_file, update_case_data, get_case_data
+
+# import asyncio
+
+cases = []
+
+cases = update_case_data('./../assets/response-1.json', cases)
 
 router = APIRouter()
 
 @router.get("/cases/")
 def get_cases():
-    return {"message": "Get all cases"}
+    return cases
 
 @router.get("/cases/{case_id}")
-def get_case(case_id: int):
-    return {"message": f"Get case with ID {case_id}"}
+def get_case(case_id: str):
+    return get_case_data( cases=cases )
 
 @router.post("/cases/")
 def create_case():
