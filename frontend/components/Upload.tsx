@@ -1,19 +1,20 @@
 "use client";
 
-import { useDashboard } from "@/context/dashboard-context";
 import classNames from "classnames";
 import { FaCheck } from "react-icons/fa";
 import { useState } from "react";
 import Spinner from "./Spinner";
+import { motion, AnimatePresence } from "framer-motion"
 
-type MedicalRecordUploadProps = {
+type UploadProps = {
     successMessage: string;
     ctaMessage: string;
     uploadActionFn: () => void;
     filePath: string | null;
+    id: string;
 }
 
-export default function MedicalRecordUpload( {ctaMessage, successMessage, uploadActionFn, filePath = null} : MedicalRecordUploadProps) {
+export default function Upload( {ctaMessage, successMessage, uploadActionFn, filePath = null, id} : UploadProps) {
 
     const handleClick = () => {
         if (inProgress) return;
@@ -25,30 +26,45 @@ export default function MedicalRecordUpload( {ctaMessage, successMessage, upload
 
     const Cta = () => <span>{successMessage}</span>
 
-    const Success = () => <span className="text-green-600 flex flex-row gap-1 items-center">
-        <FaCheck />
-        <span>{successMessage}</span>
-    </span>
-    const UploadCta = () => <span>{inProgress && <Spinner />}<Cta /></span>
+    
+
+    const UploadCta = () => <span className=" inline-flex gap-x-3 items-center">{inProgress && <Spinner />}<Cta /></span>
 
     return (
         <div className=" grow h-64 border-2 border-gray-200 border-dashed rounded flex flex-row items-center justify-center">
 
             <button
                 className={classNames(
-                    "text-white font-medium py-2 px-4 rounded border border-2",
-                    filePath === null ? "bg-blue-500 border-blue-500" : "border-transparent text-green-600"
+                    " inline-flex items-center min-h-[50px] text-white font-medium py-2 px-4 rounded border-2",
+                    filePath === null ? "bg-blue-500 border-blue-500 hover:bg-blue-600" : "border-transparent text-green-600 cursor-default"
                 )}
                 onClick={handleClick}
             >
 
-                {filePath === null && (<UploadCta />)}
-                {filePath !== null && (
-                    <Success />
-                )}
+                { filePath === null ?
+                    <UploadCta />
+                    :
+                    <Success successMessage={successMessage} id={id} />
+                }
 
             </button>
 
         </div>
     )
 }
+
+const Success = ( {successMessage, id}: {successMessage: string, id: string} ) => (
+    <AnimatePresence>
+        <motion.div
+            key={id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
+            <span className="text-green-600 flex flex-row gap-x-3 items-center">
+                <FaCheck />
+                <span>{successMessage}</span>
+            </span>
+        </motion.div>
+    </AnimatePresence>
+)

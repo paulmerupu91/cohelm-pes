@@ -20,11 +20,12 @@ export default function DashboardRoot() {
 
 	return (
 		<div className="w-full flex flex-col justify-center items-center h-screen">
-			<div className="w-full flex flex-row gap-2 items-center">
+			<div className="w-full gap-3 columns-2 items-center">
 				{/* <MedicalRecordUpload /> */}
 				{/* <GuidelinesUpload /> */}
 
                     <Upload
+                        id='medical-record-upload'
                         ctaMessage="Simulate Medical Record Upload"
                         successMessage="Medical Record Uploaded"
                         uploadActionFn={() => setMedicalRecord({url: "/assets/medical-record.pdf"})}
@@ -32,6 +33,7 @@ export default function DashboardRoot() {
                     />
 
                     <Upload
+                        id='guidelines-upload'
                         ctaMessage="Simulate Guidelines Upload"
                         successMessage="Guidelines File Uploaded"
                         uploadActionFn={() => setGuidelinesFile({url: "/assets/guidelines.pdf"})}
