@@ -1,4 +1,5 @@
 import json
+import uuid
 
 def read_json_file( file_path: str ):
     with open(file_path, 'r') as file:
@@ -33,3 +34,9 @@ def get_case_data( version: int = None, cases: list = [] ):
             return cases_updated
         case _:
             return cases[0]
+        
+def generate_post_id_string():
+    id = uuid.uuid1()
+    uuid_string = str(id)
+    # select the last five characters of the uuid string
+    return f"case_{uuid_string[-5:]}"
