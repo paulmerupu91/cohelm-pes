@@ -23,16 +23,17 @@ def get_case_data( version: int = None, cases: list = [] ):
         case 1:
             cases_updated = update_case_data('./../assets/response-1.json', cases)
             counter_for_get_case += 1
-            return cases_updated
+            return cases_updated[0]
         case 2:
             cases_updated = update_case_data('./../assets/response-2.json', cases)
             counter_for_get_case += 1
-            return cases_updated
+            return cases_updated[0]
         case 3:
             cases_updated = update_case_data('./../assets/response-3.json', cases)
             counter_for_get_case = 1
-            return cases_updated
+            return cases_updated[0]
         case _:
+            counter_for_get_case = 1
             return cases[0]
         
 def generate_post_id_string():

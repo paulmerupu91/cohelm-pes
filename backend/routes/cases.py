@@ -15,9 +15,9 @@ def get_cases():
     return cases
 
 @router.get("/cases/{case_id}")
-def get_case(case_id: str):
+def get_case(case_id: str, version: int = None):
     if( case_id == 'simulator_case' ):
-        return get_case_data( cases=cases );
+        return get_case_data( cases=cases, version=version )
     else:
         if( cases ):
             for case in cases:
