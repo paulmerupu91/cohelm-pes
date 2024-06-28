@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState, useRef, useMemo } from "react";
-import PlaceholderMain from "@/components/PlaceholderMain";
+import MainSkeleton from "@/components/MainSkeleton";
 import Summary from "@/components/case-page/Summary";
 import Determination from "@/components/case-page/Determination";
 import Steps from "@/components/case-page/Steps";
 import { sectionClasses } from './../../../../components/utils'
-import { motion } from "framer-motion";
+
 import { toast } from "react-hot-toast";
 
 export default function CaseResult() {
@@ -14,6 +14,8 @@ export default function CaseResult() {
     const [caseData, setCaseData] = useState(null);
     const [version, setVersion] = useState(1);
     const toastSummary = useRef(false);
+
+    const secondsToSwitchAPIResponses = 10;
 
     useEffect(() => {
 
@@ -46,7 +48,7 @@ export default function CaseResult() {
                 setVersion(prevVersion => {
                     return prevVersion + 1;
                 })
-            }, 10000);
+            }, secondsToSwitchAPIResponses * 1000);
         }
 
         return () => {
@@ -86,8 +88,8 @@ export default function CaseResult() {
                         <Summary caseData={caseData} />
                     </div>
                 </>
-                : 
-                <PlaceholderMain />
+                :
+                <MainSkeleton />
             }
         </div>
 	)

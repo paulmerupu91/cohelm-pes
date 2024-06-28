@@ -1,1 +1,1 @@
-export const sectionClasses = 'rounded-lg shadow px-8 max-w-[970px]';
+export const sectionClasses = 'rounded-lg shadow md:px-8 max-w-[970px]';

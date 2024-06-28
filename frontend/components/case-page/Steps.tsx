@@ -1,20 +1,41 @@
 import React from 'react'
 import { sectionClasses } from '../utils'
 import StepSkeleton from './StepSkeleton';
+import { motion, AnimatePresence } from "framer-motion";
+
+const motionDivProps = {
+    initial:{ opacity: 0, y: -20 },
+    animate:{ opacity: 1, y: 0 },
+    exit: { opacity: 0, y: 20 }
+}
 
 function Steps({ caseData }) {
     return (
         <div>     
+            <AnimatePresence>
+                
+                {caseData && caseData.steps && caseData.steps.length ?
 
-            {caseData && caseData.steps && caseData.steps.length ?
-                caseData.steps.map((step, index) => (
-                    <Step key={`key-step-${index}`} step={step} index={index}/>
-                ))
-                :
-                <div>
-                    <StepSkeleton />
-                </div>
-            }
+                        <>
+                        {caseData.steps.map((step, index) => (
+                            <motion.div
+                                key="steps"
+                                {...motionDivProps}
+                            >
+                                <Step key={`key-step-${index}`} step={step} index={index}/>
+                            </motion.div>
+                        ))}
+                        </>
+                    :
+                    <motion.div
+                        key="step-skeleton"
+                        {...motionDivProps}
+                    >
+                        <StepSkeleton />
+                        <StepSkeleton index={2}/>
+                    </motion.div>
+                }
+            </AnimatePresence>
         
         </div>
     )
@@ -27,7 +48,7 @@ export function Step({ step, index }) {
         <div className={`container mx-auto bg-white px-4 py-5 my-5 ${sectionClasses}`}>
             <span className='inline-flex bg-lime-200 rounded px-1 py-0.5 text-sm'>Step {index + 1}</span>
             <div className='step -mx-4 px-4 py-2' id={`${step.key}`}>
-                <h3 className=' text-3xl text-blue-500 mb-8 font-light'>{step.question}</h3>
+                <h3 className='text-xl md:text-3xl text-blue-500 mb-8 md:font-light'>{step.question}</h3>
                 <Options options={step.options} />
                 <IsMet is_met={step.is_met} />
                 <Evidence evidence={step.evidence} />
@@ -47,7 +68,7 @@ export function Evidence({ evidence }) {
                 {evidence && evidence.length > 0 ?
                     <>
                         {evidence?.map?.((e, index) => (
-                            <div key={`key-evidence-${index}`} className="flex items-top gap-3 md:gap-6">
+                            <div key={`key-evidence-${index}`} className="flex items-top gap-2 md:gap-6">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" style={{ minWidth: "20px" }} width="20" height="20" fill="currentColor" className="bi bi-filetype-pdf top-1 relative" viewBox="0 0 16 16">
                                     <path fillRule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z" />
@@ -55,11 +76,11 @@ export function Evidence({ evidence }) {
                                 <div key={`key-evidence-${index}`} className='evidence '>
                                     <span className=''>{e.content}</span>
                                     <div>
-                                        <div className='flex items-top mt-2 mb-3 text-sm'>
+                                        <div className='flex flex-wrap items-top mt-2 mb-3 text-sm gap-x-2'>
 
 
                                             <span className=' font-bold text-slate-600'>Document:&nbsp;</span><a href="#" className="link underline underline-offset-2 hover:text-blue-500">{e.pdf_name}</a>
-                                            <p className='text-sm mx-2 inline-block border-s border-slate-300 pl-2'>Page Number: {e.page_number}</p>
+                                            <p className='text-sm pl-2 inline-block border-s border-slate-300'>Page: {e.page_number}</p>
 
                                         </div>
                                     </div>
