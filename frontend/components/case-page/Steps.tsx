@@ -19,7 +19,7 @@ function Steps({ caseData }) {
                         <>
                         {caseData.steps.map((step, index) => (
                             <motion.div
-                                key="steps"
+                                key={`step-${index}`}
                                 {...motionDivProps}
                             >
                                 <Step key={`key-step-${index}`} step={step} index={index}/>
@@ -147,7 +147,7 @@ export function Options({ options }) {
                     ))}
                 </div>
                 <div className='mt-2 -mx-2 my-6' >
-                    <button className="btn mx-2 mt-2 px-2 py-1 text-sm border inline-flex items-center rounded-lg bg-white" onClick={toggleShowNotChosen}>
+                    <button className="btn mx-2 mt-2 px-2 py-1 text-sm border inline-flex items-center rounded-lg bg-white hover:bg-slate-200 hover:border-slate-300" onClick={toggleShowNotChosen}>
                         Options Not Selected
                         {<span className='inline-flex items-center transition-all' style={{transform: showNotChosen ? "rotate(180deg)" : "rotate(0deg)"}}><IconArrowDown /></span>}
                     </button>
