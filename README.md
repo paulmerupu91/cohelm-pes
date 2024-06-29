@@ -8,6 +8,10 @@ To launch the backend FastAPI application, run the following from the root of th
 
 ```sh
     cd backend
+    # Create a virtual environment
+    source .venv/bin/activate
+    # Activate venv
+    source .venv/bin/activate
     # Install FastAPI
     pip install fastapi
     # Launch the backend server
@@ -46,3 +50,19 @@ The following URLs can be used to fetch different variations of data present in 
 - [http://127.0.0.1:8000/cases/simulator_case?version=1](http://127.0.0.1:8000/cases/simulator_case?version=1)
 - [http://127.0.0.1:8000/cases/simulator_case?version=2](http://127.0.0.1:8000/cases/simulator_case?version=2)
 - [http://127.0.0.1:8000/cases/simulator_case?version=3](http://127.0.0.1:8000/cases/simulator_case?version=3)
+
+# Ideas to improve the application
+
+- Add a sidebar to the case page with links to different sections on the page such as Steps and Summary.
+- Add back button that takes the user back to the dashboard page to resubmit the files if necessary.
+- Add a sticky bar at the top to dynamically indicate the section that takes up the most space in the viewport as the user scrolls.
+- Add Type/Interfaces in the frontend application using TS.
+- Use Pydantic for type annotations and data validation in the backend application.
+- Improve mobile layout.
+- Modify tailwind config to include brand's primary, secondary and tertiary colors and generate TailwindCSS utility classes.
+- Use server side rendering in certain pages if useful.
+
+# Bonus tasks completed
+
+- Restyled the file upload flow
+- Created a generic file upload component to replace both `<GuidelinesUpload />` and `<MedicalRecordUpload />`
